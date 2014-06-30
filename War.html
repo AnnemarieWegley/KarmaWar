@@ -1,27 +1,4 @@
 <script>
-  function Deck() {
-    this.cards = [];
-    this.count = function() {
-      return this.cards.length;
-    }
-    this.init = function() {
-      for (s = 1; s <= 4; s++) {
-        for (r = 1; r <= 13; r++) {
-          this.cards.push(new Card(r, s));
-        }
-      }
-    }
-  }
- 
-  function Card(rank, suit) {
-    this.rank = rank;
-    this.suit = suit;
-    this.show = function() {
-      console.log(this.rank + " of " + this.suit);
-    }
-  }
-  d = new Deck();
-  d.init();
   function Player(name, karma){
     this.name = name;
     this.karma = karma;
@@ -35,20 +12,40 @@
       }
     }
   }
+
+  function Stack() {
+    this.theStack = []
+    this.push = function(value) {
+      this.theStack.push(value)
+    }
+    this.pop = function() {
+      return this.theStack.pop()
+    }
+    this.count = function() {
+      return this.theStack.length
+    }
+  }
+
   playerOne = new Player("Jose", 4);
   playerTwo = new Player("Caleb", 3);
-for(war = 0; war < 27; war++){
-      playerOne.play();
-      playerTwo.play();
-      console.log(playerOne.name + " draws a " + playerOne.play() + "; " + playerTwo.name + " draws a " + playerTwo.play());
-      
-      if(playerOne.play() > playerTwo.play()) {
-        playerOne.win = playerOne.win + 1;
-      }
-      else if(playerTwo.play() > playerOne.play()) {
-        playerTwo.win = playerTwo.win + 1;
-      }
+
+  playedKarma = new Stack()
+
+  for(war = 0; war < 27; war++){
+    playerOne.play();
+    playerTwo.play();
+
+    //replaced console with stack
+    // console.log(playerOne.name + " draws a " + playerOne.play() + "; " + playerTwo.name + " draws a " + playerTwo.play());
+    playedKarma.push(playerOne.name + " draws a " + playerOne.play() + "; " + playerTwo.name + " draws a " + playerTwo.play())
+
+    if(playerOne.play() > playerTwo.play()) {
+      playerOne.win = playerOne.win + 1;
     }
+    else if(playerTwo.play() > playerOne.play()) {
+      playerTwo.win = playerTwo.win + 1;
+    }
+  }
 
   if(playerOne.win > playerTwo.win) {
     alert(playerOne.name + " wins " + playerOne.win + " to " + playerTwo.win);
@@ -56,5 +53,12 @@ for(war = 0; war < 27; war++){
   else if(playerTwo.win > playerOne.win) {
     alert(playerTwo.name + " wins " + playerTwo.win + " to " + playerOne.win);
   }
-  
+
+  //this karma was played throughout the game:
+  console.log(playedKarma);
+  for (var move = 0; move < playedKarma.count(); move++) {
+    var thisPlay = playedKarma.pop()
+    console.log(thisPlay)
+  }
+
 </script>
